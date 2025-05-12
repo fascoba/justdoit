@@ -1,0 +1,17 @@
+from azure.servicebus.aio import ServiceBusClient
+from azure.core.credentials import AzureSasCredential
+
+client = ServiceBusClient(
+    fully_qualified_namespace="your-namespace.servicebus.windows.net",
+    credential=AzureSasCredential("your-sas-token")
+)
+
+async def test_connection():
+    async with client:
+        sender = client.get_queue_sender(queue_name="your-queue")
+        async with sender:
+            print("Connection successful")
+
+# Run the test
+import asyncio
+asyncio.run(test_connection())
